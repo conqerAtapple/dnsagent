@@ -1,0 +1,128 @@
+
+dnsagent
+-------
+    A tool to monitor DNS resolution times for a set of static domains. The
+    domains are :
+
+        |   1 |  google.com  |
+        |   2 | facebook.com  |
+        |   3 | youtube.com   |
+        |   4 | yahoo.com |
+        |   5 | live.com    |
+        |   6 | wikipedia.org |
+        |   7 | baidu.com |
+        |   8 | blogger.com   |
+        |   9 | msn.com     |
+        |   10 | qq.com
+
+
+        It stores the ping request time series (request time and latency) in a
+        mysql database tables.
+
+
+Database
+--------
+    The tool uses 'mysql' database to store DNS query related statistics. Tables
+    are:
+
+    1. domains: This table is master table for domain names
+
+    Description:
+
+    +-------+--------------+------+-----+---------+----------------+
+    | Field | Type         | Null | Key | Default | Extra          |
+    +-------+--------------+------+-----+---------+----------------+
+    | id    | mediumint(9) | NO   | PRI | NULL    | auto_increment |
+    | name  | varchar(500) | NO   | UNI | NULL    |                |
+    +-------+--------------+------+-----+---------+----------------+
+
+
+
+    2. pings: This table stores time series data (request time, response
+        latency)
+
+    Description:
+
+    +-----------+--------------+------+-----+---------+-------+
+    | Field     | Type         | Null | Key | Default | Extra |
+    +-----------+--------------+------+-----+---------+-------+
+    | id        | mediumint(9) | NO   | PRI | 0       |       |
+    | request   | bigint(20)   | NO   | PRI | 0       |       |
+    | timetaken | bigint(20)   | YES  |     | NULL    |       |
+    +-----------+--------------+------+-----+---------+-------+
+
+
+Usage
+------
+
+    Run the tool's executable 'dnsagent' as:
+
+    ./dnsagent -d <database name> -u <database user> -p <database password> [-h <database host>] [-f <frequency in seconds>] [-s]
+
+    Options:
+
+    Mandatory options:
+        -d : Database name where the tool's tables will be created.
+        -u : Database user whose credentials will be used to connect to the database.
+        -p : Database user password whose credentials will be used to connect to the database.
+
+
+    Optional options:
+        -h : Database host (defaulted to 'localhost' if not specified)
+        -f : DNS query frequency in seconds.
+
+    Run modes:
+        default (query mode): In the default mode, the tool will start pinging the DNS server
+                              every 'frequency' seconds.
+
+        stats only: This mode is triggered by the '-s' option. In this mode, the
+                    tool uses the stored data in the database to print statistics. It DOES
+                    NOT send any DNS query in this mode.
+
+
+    Summary statistics:
+        The tool will print query statistics
+
+            a. when the 'query mode' is interupted (ctrl + c)
+                        OR
+            b. when ran in 'stats only' mode.
+
+
+    Examples:
+
+    1. ./dnsagent -d domstats -u root -p password
+        This will run the dnsagent in "query mode".
+
+    2. ./dnsagent -d domstats -u root -p password -s
+        This will run the tool in "stats only" mode.
+
+
+Runtime requirements
+-------------------
+- The tool assumes mysql database being installed on the "host"
+- The executable has following external library dependencies:
+
+        libmysqlpp.so.3
+        libmysqlclient.so.16
+        libldns.so.1
+        libstdc++.so.6
+        libm.so.6
+        libgcc_s.so.1
+        libc.so.6
+        libpthread.so.0
+        libcrypt.so.1
+        libnsl.so.1
+        libz.so.1
+        libcrypto.so.0.9.8
+        libdl.so.2
+
+
+
+Build Instructions (On **nix systems)
+-----------------------------
+
+1. make
+    This will build an executable 'dnsagent' in the source directory.
+
+2. make debug
+    This will build the executable 'dnsagent' with DEBUG flag turned on.
