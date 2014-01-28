@@ -68,17 +68,17 @@ Usage
 
     ./dnsagent -d <database name> -u <database user> -p <database password> [-h <database host>] [-f <frequency in seconds>] [-s]
 
-    Options:
+    Arguments:
 
-    Mandatory options:
-        -d : Database name where the tool's tables will be created.
-        -u : Database user whose credentials will be used to connect to the database.
-        -p : Database user password whose credentials will be used to connect to the database.
+        Mandatory:
+            -d : Database name where the tool's tables will be created.
+            -u : Database user whose credentials will be used to connect to the database.
+            -p : Database user password whose credentials will be used to connect to the database.
 
 
-    Optional options:
-        -h : Database host (defaulted to 'localhost' if not specified)
-        -f : DNS query frequency in seconds.
+        Optional:
+            -h : Database host (defaulted to 'localhost' if not specified)
+            -f : DNS query frequency in seconds.
 
     Run modes:
         default (query mode): In the default mode, the tool will start pinging the DNS server
