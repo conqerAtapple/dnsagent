@@ -1,5 +1,7 @@
 Coming soon ...
 
+- Test suite
 - Multithreaded pingers
 - Configuration file (read domains from it)
 - Ability to get summary while query is in progress.
+
