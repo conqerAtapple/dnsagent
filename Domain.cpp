@@ -23,12 +23,12 @@ void Domain::load()
     Database *db = Database::getInstance();
     char query[500];
 
-    snprintf(query, 499, "INSERT IGNORE INTO domains VALUES ('', '%s');", name.c_str());
+    snprintf(query, 500, "INSERT IGNORE INTO domains VALUES ('', '%s');", name.c_str());
     vector<Row> results;
     db->runQuery(query, results);
 
     results.clear();
-    snprintf(query, 499, "SELECT * FROM domains WHERE name='%s';", name.c_str());
+    snprintf(query, 500, "SELECT * FROM domains WHERE name='%s';", name.c_str());
     if (db->runQuery(query, results))
     {
         uniqid = results[0][0];

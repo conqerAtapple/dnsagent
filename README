@@ -52,8 +52,17 @@ Database
     +-----------+--------------+------+-----+---------+-------+
 
 
+    Assumption:
+        The tool assumes base database  'mysql' present and created on the host.
+        In other words, the following command should let you inside the
+        database (or prompt you for password):
+
+        mysql -u <user> -p mysql
+
 Usage
 ------
+
+    Set LD_LIBRARY_PATH to include dynamic library paths (see below for library dependencies)
 
     Run the tool's executable 'dnsagent' as:
 

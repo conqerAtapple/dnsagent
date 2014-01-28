@@ -19,10 +19,8 @@ void DNSPing::update(struct timeval &rtime, unsigned qtime)
     unsigned long sec = rtime.tv_sec;
     debug("Adding timestamp '%lu' for '%s' ", sec, domain.getName().c_str());
 
-    char buff[500];
-    memset(buff, 0, 500);
-
-    snprintf(buff, 499, "INSERT INTO pings values (%d, %lu, %u);", domain.getId(), sec, qtime);
+    char buff[500] = {0};
+    snprintf(buff, 500, "INSERT INTO pings values (%d, %lu, %u);", domain.getId(), sec, qtime);
 
     vector<Row> results;
     Database::getInstance()->runQuery(buff, results);
