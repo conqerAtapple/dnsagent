@@ -22,6 +22,8 @@ namespace te
 
             void load();
 
+            const static size_t MAX_DOMAIN_LENGTH;
+
         private:
             std::string name;
             int uniqid;

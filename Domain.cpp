@@ -11,6 +11,8 @@ using std::vector;
 using namespace mysqlpp;
 using namespace te;
 
+const size_t Domain::MAX_DOMAIN_LENGTH = 500;
+
 Domain::Domain(const string &nm):
     name(nm),
     uniqid(-1)
@@ -20,15 +22,20 @@ Domain::Domain(const string &nm):
 
 void Domain::load()
 {
-    Database *db = Database::getInstance();
-    char query[500];
+    if(name.length() > MAX_DOMAIN_LENGTH)
+    {
+        throw string ("Domain name exceeds max allowed length");
+    }
 
-    snprintf(query, 500, "INSERT IGNORE INTO domains VALUES ('', '%s');", name.c_str());
+    Database *db = Database::getInstance();
+    char query[MAX_DOMAIN_LENGTH + 100];
+
+    snprintf(query, MAX_DOMAIN_LENGTH + 100, "INSERT IGNORE INTO domains VALUES ('', '%s');", name.c_str());
     vector<Row> results;
     db->runQuery(query, results);
 
     results.clear();
-    snprintf(query, 500, "SELECT * FROM domains WHERE name='%s';", name.c_str());
+    snprintf(query, MAX_DOMAIN_LENGTH + 100, "SELECT * FROM domains WHERE name='%s';", name.c_str());
     if (db->runQuery(query, results))
     {
         uniqid = results[0][0];
