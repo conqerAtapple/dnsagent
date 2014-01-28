@@ -13,6 +13,7 @@
 using namespace te;
 
 const static int DEFAULT_FREQUENCY_SECS = 10;
+const static unsigned MAX_FREQUENCY_SECS = 10 * 86400; // 10 days
 
 const static std::string domains[] = {
     "google.com",
@@ -158,15 +159,20 @@ int main(int argc, char **argv)
     if ((dbName == NULL) ||
         (dbUser == NULL) ||
         (dbPasswd == NULL) ||
-        (pingFrequency <= 0))
+        (pingFrequency == 0) ||
+        (pingFrequency > MAX_FREQUENCY_SECS))
     {
-        if (pingFrequency <= 0)
+        if (pingFrequency == 0 || pingFrequency > MAX_FREQUENCY_SECS)
         {
-            error("Ping frequency should be greater than 0");
+            error("Ping frequency should be in range [0..%u] secs", MAX_FREQUENCY_SECS);
         }
-        error ("Invalid input parameter: database name: '%s',\
-            database user: %s, \
-            database password: %s", dbName, dbUser, dbPasswd);
+        else
+        {
+            error ("Invalid input parameter: database name: '%s',\
+                database user: %s, \
+                database password: %s", dbName, dbUser, dbPasswd);
+        }
+
         usage();
         exit(-1);
     }
