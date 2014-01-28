@@ -66,7 +66,7 @@ void start()
             dp->init();
         }
 
-        std::vector<DNSPinger*>::iterator iEnd = dnsPingers.end();
+        std::vector<DNSPinger*>::const_iterator iEnd = dnsPingers.end();
 
         if(!isStatsOnly)
         {
@@ -74,7 +74,7 @@ void start()
             while (keepRunning)
             {
                 report ("Starting ping # %d for all domains", ++count);
-                for (std::vector<DNSPinger*>::iterator i = dnsPingers.begin(); i != iEnd; ++i)
+                for (std::vector<DNSPinger*>::const_iterator i = dnsPingers.begin(); i != iEnd; ++i)
                 {
                     (*i)->run();
                 }
