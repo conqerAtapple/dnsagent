@@ -4,22 +4,38 @@
 #include <stdio.h>
 
 #define trace()\
-    printf("[TRACE] [%s : %d] \n", __PRETTY_FUNCTION__, __LINE__);
+do      \
+{       \
+    printf("[TRACE] [%s : %d] \n", __PRETTY_FUNCTION__, __LINE__);\
+}while(0);
 
 #ifdef DEBUG
 #define debug(fmt, msg...)\
-    printf("[TRACE] [%s : %d]:::"fmt"\n", __PRETTY_FUNCTION__, __LINE__, ##msg);
+do      \
+{       \
+    printf("[TRACE] [%s : %d]:::"fmt"\n", __PRETTY_FUNCTION__, __LINE__, ##msg);\
+}while(0);
+
 #else
-#define debug(fmt, msg...)
+#define debug(fmt, msg...) (void(0))
 #endif
 
 #define error(fmt, msg...)\
-    printf("[ERROR] [%s : %d]:::"fmt"\n", __PRETTY_FUNCTION__, __LINE__, ##msg);
+do      \
+{       \
+    printf("[ERROR] [%s : %d]:::"fmt"\n", __PRETTY_FUNCTION__, __LINE__, ##msg);\
+}while(0);
 
 #define info(fmt, msg...)\
-    printf("[INFO] [%s : %d]:::"fmt"\n", __PRETTY_FUNCTION__, __LINE__, ##msg);
+do      \
+{       \
+    printf("[INFO] [%s : %d]:::"fmt"\n", __PRETTY_FUNCTION__, __LINE__, ##msg);\
+}while(0);
 
 #define report(fmt, msg...)\
-    printf(fmt"\n", ##msg);
+do      \
+{       \
+    printf(fmt"\n", ##msg);\
+}while(0);
 
 #endif

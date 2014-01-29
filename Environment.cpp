@@ -24,6 +24,7 @@ Environment* Environment::getInstance()
 
 void Environment::addProperty(const string &key, const string &val)
 {
+    debug("Adding environment property '%s' --> '%s'", key.c_str(), val.c_str());
     propMap.insert(std::make_pair<string, string>(key, val));
 }
 
